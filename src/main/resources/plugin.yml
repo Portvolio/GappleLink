@@ -1,0 +1,10 @@
+name: GappleLink
+version: ${project.version}
+main: wtf.violet.portvolio.gapplelink.GappleLink
+api-version: 1.16
+authors: [violetwtf]
+website: https://violet.wtf
+commands:
+  startscenario:
+    description: Start the scenario
+    permission: scenario.start
