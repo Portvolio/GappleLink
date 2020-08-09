@@ -2,7 +2,7 @@ package wtf.violet.portvolio.gapplelink;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import wtf.violet.portvolio.gapplelink.command.StartScenarioCommand;
+import wtf.violet.portvolio.common.StartScenarioCommand;
 import wtf.violet.portvolio.gapplelink.listener.AppleListener;
 
 import java.util.HashMap;
@@ -18,14 +18,25 @@ public final class GappleLink extends JavaPlugin
     public void onEnable()
     {
         getServer().getPluginManager().registerEvents(new AppleListener(this), this);
-        getCommand("startscenario").setExecutor(new StartScenarioCommand(this));
+
+        new StartScenarioCommand(this, (task) ->
+        {
+            final Player highest = getHighestApples();
+
+            if (highest == null)
+            {
+                return;
+            }
+
+            highest.damage(0xDEAD);
+        }, 20 * 60).register();
     }
 
     /**
      * Get the player with the highest amount of consumed golden apples.
      * @return Player, or null if no players are recorded
      */
-    public Player getHighestApples()
+    private Player getHighestApples()
     {
         Player highest = null;
         int amount = 0;
